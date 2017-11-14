@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/myba；； /tis-3-mapper.dtd">
+  <!-- 一点要写对应接名称 -->
+  <mapper namespace="dao.productMapper">
+   	<resultMap type="pojo.product" id="abc">
+	<id property="id" column="id"/>
+	<result property="productname" column="productname"/>
+	<result property="Descs"  column="Descs"/>
+	<result property="cid"  column="cid"/>
+	
+	
+		<association property="catagorys" javaType="pojo.Catagory">
+			<id property="id" column="id"/>
+			<result property="Name" column="Name"/>
+			<result property="Explain" column="Explain"/>
+		</association>
+	</resultMap>
+	
+   	<select id="pagefeng" resultMap="abc">
+  
+   	SELECT  * FROM product s  INNER JOIN catagory c ON  s.`cid`=  c.`id` ORDER BY s.`id` limit #{b},#{s}
+   	</select>
+   	<select id="count" resultType="int">
+		select count(*) from product
+	</select>
+	<delete id="delete" parameterType="int">
+	delete from product where id =#{id}
+	</delete>
+	
+	<insert id="insert"  parameterType="int" >
+	insert into product
+	</insert>
+   
+  </mapper>
